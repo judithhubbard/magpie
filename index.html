@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magpie — image search</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- favicon (SVG with PNG fallbacks for older browsers).
+       The ?v= query string forces browsers to re-fetch when the icon changes. -->
+  <link rel="icon" type="image/svg+xml" href="icon.svg?v=2" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png?v=2" />
+  <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png?v=2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png?v=2" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f766e" />
+</head>
+<body>
+  <header id="app-header">
+    <div id="app-brand">
+      <img src="icon.svg" alt="" width="24" height="24" />
+      <span>Magpie</span>
+    </div>
+    <div id="tab-bar"></div>
+    <button id="saved-button" title="Saved images">★ <span id="saved-count">0</span></button>
+    <button id="about-button" title="About Magpie">ⓘ</button>
+    <button id="settings-button" title="Settings">⚙</button>
+  </header>
+
+  <section id="search-bar">
+    <input
+      id="search-input"
+      type="search"
+      placeholder="Search free & Creative Commons images…"
+      autocomplete="off"
+      autofocus
+    />
+    <select id="resolution-filter" title="Minimum resolution">
+      <option value="">Any size</option>
+      <option value="small">Small</option>
+      <option value="medium">Medium</option>
+      <option value="large">Large</option>
+    </select>
+    <div id="options-menu-wrap">
+      <button id="options-menu-button" type="button" aria-haspopup="true" aria-expanded="false">
+        Options <span id="options-menu-count"></span> ▾
+      </button>
+      <div id="options-menu" hidden role="menu"></div>
+    </div>
+    <div id="source-menu-wrap">
+      <button id="source-menu-button" type="button" aria-haspopup="true" aria-expanded="false">
+        Sources <span id="source-menu-count"></span> ▾
+      </button>
+      <div id="source-menu" hidden role="menu"></div>
+    </div>
+  </section>
+
+  <section id="status-strip"></section>
+
+  <main id="results-grid"></main>
+
+  <button id="load-more" hidden>Load more</button>
+
+  <div id="lightbox" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content lightbox-content"></div>
+  </div>
+
+  <div id="saved-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content saved-content">
+      <header class="saved-header">
+        <h2>Saved images <span id="saved-modal-count" class="settings-help"></span></h2>
+        <div class="saved-toolbar">
+          <button id="download-all-btn">Download all (JPG)</button>
+          <button id="export-html-btn">Export as HTML</button>
+          <button id="export-md-btn">Export as Markdown</button>
+          <button id="export-attr-btn">Copy attributions</button>
+          <button id="clear-saved-btn">Clear all</button>
+          <button data-close class="primary">Done</button>
+        </div>
+      </header>
+      <div id="saved-grid"></div>
+    </div>
+  </div>
+
+  <div id="settings-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content">
+      <h2>Settings</h2>
+      <p class="settings-intro">
+        Some image sources require a free API key. Paste yours below — it's
+        stored only in your browser.
+      </p>
+      <div id="settings-keys"></div>
+      <hr />
+      <div class="settings-row">
+        <button id="clear-cache-btn">Clear cached results</button>
+        <span id="clear-cache-status" class="settings-help"></span>
+      </div>
+      <div class="settings-actions">
+        <button data-close class="primary">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="about-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content about-content">
+      <div class="about-header">
+        <img src="icon.svg" alt="" width="48" height="48" />
+        <div>
+          <h2>Magpie</h2>
+          <div class="about-tagline">A lightweight image search across free &amp; Creative Commons sources.</div>
+        </div>
+      </div>
+      <div class="about-body">
+        <p>Magpie searches across many open image collections — Wikimedia, Library of Congress, Internet Archive, museum collections, scientific specimen databases, stock photography, and more — and shows the results with proper attribution and license info for each image.</p>
+        <p>Each image carries its own license, displayed in the lightbox. Verify the license before using an image.</p>
+        <p><strong>Source:</strong> <a href="https://github.com/judithhubbard/magpie" target="_blank" rel="noopener">github.com/judithhubbard/magpie</a></p>
+        <p><strong>Tool license:</strong> MIT</p>
+        <p><strong>Icon:</strong> based on <em>"Black-billed Magpie in flight 2"</em> by <a href="https://commons.wikimedia.org/wiki/File:Black-billed_Magpie_in_flight_2.jpg" target="_blank" rel="noopener">Grungaloo on Wikimedia</a>, used under CC BY-SA 4.0. The icon adaptation is licensed CC BY-SA 4.0.</p>
+      </div>
+      <div class="about-actions">
+        <button data-close class="primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+Magpie — third-party content notices
+=====================================
+
+ICON
+----
+The Magpie icon (icon.svg, icon-*.png) is a silhouette adapted from the
+photograph "Black-billed Magpie in flight 2" by Wikimedia Commons user
+Grungaloo, licensed under the Creative Commons Attribution-ShareAlike 4.0
+International license (CC BY-SA 4.0):
+
+  https://commons.wikimedia.org/wiki/File:Black-billed_Magpie_in_flight_2.jpg
+  https://creativecommons.org/licenses/by-sa/4.0/
+
+The icon is a derivative work licensed under the same terms (CC BY-SA 4.0).
+You may reuse, modify, and redistribute it under that license, including for
+commercial purposes, provided you give appropriate credit to the original
+photographer and release derivatives under the same license.
+
+
+SEARCH RESULTS
+--------------
+Magpie queries third-party APIs (Wikimedia, Library of Congress, Internet
+Archive, museum collections, scientific databases, stock photography services,
+etc.). Each image returned by these APIs is governed by its own license,
+which is shown in the lightbox along with attribution information.
+
+The tool itself does not redistribute these images — it only displays them
+hot-linked from the source service. Anyone using an image they found via
+Magpie is responsible for verifying and complying with that image's license.
+
+
+TOOL CODE
+---------
+The Magpie tool itself (HTML, CSS, JavaScript) is licensed under the MIT
+License — see the LICENSE file.

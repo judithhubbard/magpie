@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local server / build artifacts
+__pycache__/
+*.pyc
+node_modules/
+dist/
+
+# Personal design assets (icon proposals, color experiments, preview pages,
+# trace sources). Kept local; the live app uses ./icon.svg in the root.
+icons/
+
+# Built macOS .app bundle and its zip — distribute via GitHub Releases,
+# not via the repo. Run ./build-app.sh to regenerate.
+Magpie.app/
+Magpie.app.zip
+
+# Local Finder alias to /Applications/Magpie.app
+/Magpie
+
+# Claude Code's per-project settings
+.claude/
