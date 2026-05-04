@@ -472,6 +472,19 @@ input[type="search"]:focus, input[type="text"]:focus, select:focus {
 }
 .error-state { color: var(--danger); }
 
+.intro-state .intro-lead {
+  max-width: 640px;
+  margin: 0 auto 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--fg);
+}
+.intro-state .intro-cta {
+  margin: 0;
+  font-size: 14px;
+  color: var(--fg-soft);
+}
+
 /* ---------- Modal / lightbox ---------- */
 
 .modal {

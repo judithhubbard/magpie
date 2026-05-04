@@ -68,7 +68,7 @@ function render() {
   if (!tab) { grid.replaceChildren(); loadMoreBtn.hidden = true; return; }
 
   if (!tab.query) {
-    grid.replaceChildren(emptyState('Type a query above to search across free image sources.'));
+    grid.replaceChildren(introState());
     loadMoreBtn.hidden = true;
     return;
   }
@@ -153,6 +153,24 @@ function emptyState(text) {
   div.style.gridColumn = '1 / -1';
   div.textContent = text;
   return div;
+}
+
+// First-load intro: a brief one-liner about what Magpie is, plus a CTA.
+function introState() {
+  const wrap = document.createElement('div');
+  wrap.className = 'empty-state intro-state';
+  wrap.style.gridColumn = '1 / -1';
+
+  const lead = document.createElement('p');
+  lead.className = 'intro-lead';
+  lead.textContent = 'Magpie searches 20+ free and Creative Commons image collections — Wikimedia, NASA, the Library of Congress, iNaturalist, museum archives, scientific databases, and more — in one query.';
+
+  const cta = document.createElement('p');
+  cta.className = 'intro-cta';
+  cta.textContent = 'Type a query above to start.';
+
+  wrap.append(lead, cta);
+  return wrap;
 }
 
 function handleClick(e) {
