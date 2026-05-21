@@ -1,4 +1,5 @@
 import { describeLicense, formatAttribution } from '../attribution.js';
+import { IS_EMBEDDED, postSelect } from '../embedding.js';
 
 const modal = document.getElementById('lightbox');
 const content = modal.querySelector('.lightbox-content');
@@ -192,6 +193,18 @@ export function openLightbox(image) {
   const closeBtn = document.createElement('button');
   closeBtn.dataset.close = '';
   closeBtn.textContent = 'Close';
+
+  if (IS_EMBEDDED) {
+    const selectBtn = document.createElement('button');
+    selectBtn.className = 'primary lightbox-select';
+    selectBtn.textContent = '📥 Select';
+    selectBtn.title = 'Send this image’s attribution to the host page';
+    selectBtn.addEventListener('click', () => {
+      const sent = postSelect(image);
+      flashButton(selectBtn, sent ? 'Sent ✓' : 'Send failed');
+    });
+    actions.append(selectBtn);
+  }
 
   actions.append(downloadBtn, copyUrlBtn, copyAttrBtn, closeBtn);
   meta.appendChild(actions);

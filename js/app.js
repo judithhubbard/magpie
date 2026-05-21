@@ -9,8 +9,10 @@ import { init as initSettings } from './ui/settings.js';
 import { init as initSaved }    from './ui/saved.js';
 import { init as initAbout }    from './ui/about.js';
 import { readUrlParams, applyUrlParams, clearUrlParams } from './url-params.js';
+import { initEmbedding } from './embedding.js';
 
 state.load();
+initEmbedding();
 
 const searchInput      = document.getElementById('search-input');
 const resolutionFilter = document.getElementById('resolution-filter');

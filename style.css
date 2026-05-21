@@ -457,6 +457,31 @@ input[type="search"]:focus, input[type="text"]:focus, select:focus {
 .tile-bookmark.saved { opacity: 1; background: #f59e0b; color: white; }
 .tile-bookmark:hover { background: #f59e0b; color: white; }
 
+/* Iframe-embedded mode: each tile gets a "Select" button that posts the
+   image's attribution to the host window. Visible by default so the
+   primary action is obvious without needing to hover. */
+.tile-select {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.85);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transition: background 0.15s, transform 0.15s;
+  z-index: 2;
+}
+.tile-select:hover { background: var(--accent, #2563eb); }
+.tile-select.sent { background: #16a34a; }
+.tile-select.failed { background: var(--danger, #dc2626); }
+.tile.selected-flash { outline: 3px solid #16a34a; outline-offset: -3px; }
+
 #load-more {
   display: block;
   margin: 16px auto 32px;

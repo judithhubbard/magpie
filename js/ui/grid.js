@@ -3,6 +3,7 @@ import { rejectAndBackfill } from '../search.js';
 import { describeLicense } from '../attribution.js';
 import { looksAdult } from '../sources/base.js';
 import { openLightbox } from './lightbox.js';
+import { IS_EMBEDDED, postSelect } from '../embedding.js';
 
 const grid = document.getElementById('results-grid');
 const loadMoreBtn = document.getElementById('load-more');
@@ -144,6 +145,15 @@ function renderTile(image) {
   bookmark.dataset.action = 'bookmark';
   tile.appendChild(bookmark);
 
+  if (IS_EMBEDDED) {
+    const select = document.createElement('button');
+    select.className = 'tile-select';
+    select.textContent = '📥 Select';
+    select.title = 'Send this image’s attribution to the host page';
+    select.dataset.action = 'select';
+    tile.appendChild(select);
+  }
+
   return tile;
 }
 
@@ -196,7 +206,28 @@ function handleClick(e) {
     return;
   }
 
+  if (e.target.dataset.action === 'select') {
+    e.stopPropagation();
+    const image = tab.perSource[sourceId]?.results.find((r) => r.id === imageId);
+    if (!image) return;
+    const sent = postSelect(image);
+    flashSelect(e.target, sent);
+    if (sent) tile.classList.add('selected-flash');
+    setTimeout(() => tile.classList.remove('selected-flash'), 800);
+    return;
+  }
+
   // Find the image and open the lightbox.
   const image = tab.perSource[sourceId]?.results.find((r) => r.id === imageId);
   if (image) openLightbox(image);
+}
+
+function flashSelect(btn, sent) {
+  const original = btn.textContent;
+  btn.textContent = sent ? '✓ Sent' : '✗ Failed';
+  btn.classList.add(sent ? 'sent' : 'failed');
+  setTimeout(() => {
+    btn.textContent = original;
+    btn.classList.remove('sent', 'failed');
+  }, 1200);
 }
