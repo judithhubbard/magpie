@@ -209,6 +209,23 @@ export function isSourceEnabled(sourceId) {
   return state.enabledSources?.[sourceId] !== false;   // default ON
 }
 
+// Session-only overrides (no localStorage write) — used by URL-param embedding
+// so a host page can pre-fill settings without clobbering the user's saved
+// preferences for future visits without params.
+export function applyOptionOverride(key, value) {
+  state.options[key] = value;
+  notify({ type: 'options:change', key });
+}
+
+export function applySourceOverrides(enabledIds) {
+  const enabled = new Set(enabledIds);
+  for (const source of ALL_SOURCES) {
+    if (enabled.has(source.id)) delete state.enabledSources[source.id];
+    else state.enabledSources[source.id] = false;
+  }
+  notify({ type: 'source:toggle' });
+}
+
 export function getEnabledSources() {
   const apiKeys = state.apiKeys || {};
   return ALL_SOURCES.filter((s) =>

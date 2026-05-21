@@ -8,6 +8,7 @@ import { init as initOptions }  from './ui/options.js';
 import { init as initSettings } from './ui/settings.js';
 import { init as initSaved }    from './ui/saved.js';
 import { init as initAbout }    from './ui/about.js';
+import { readUrlParams, applyUrlParams, clearUrlParams } from './url-params.js';
 
 state.load();
 
@@ -79,9 +80,21 @@ document.addEventListener('keydown', (e) => {
 
 // Initial render + restore searches for previously-saved tabs.
 syncInputsToActiveTab();
+
+// Apply URL-param overrides (session-only — see js/url-params.js). If `q` is
+// present, it runs a fresh search and bypasses the saved-tab top-up.
+const urlParams = readUrlParams();
+const urlParamsApplied = applyUrlParams(urlParams, searchInput);
+
 try {
-  const initialTab = state.getActiveTab();
-  if (initialTab) topUpTab(initialTab.id);
+  if (urlParams.q) {
+    runSearchFromInputs();
+  } else {
+    const initialTab = state.getActiveTab();
+    if (initialTab) topUpTab(initialTab.id);
+  }
 } catch (err) {
-  console.error('topUpTab on load failed:', err);
+  console.error('initial search on load failed:', err);
 }
+
+if (urlParamsApplied) clearUrlParams();
