@@ -482,6 +482,36 @@ input[type="search"]:focus, input[type="text"]:focus, select:focus {
 .tile-select.failed { background: var(--danger, #dc2626); }
 .tile.selected-flash { outline: 3px solid #16a34a; outline-offset: -3px; }
 
+/* Passive indicator: this image is already attached to the host species. */
+.tile-attached {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  background: #e8e8e8;
+  color: #444;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: default;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  pointer-events: auto;
+  user-select: none;
+  z-index: 2;
+}
+.lightbox-attached {
+  display: inline-block;
+  background: #e8e8e8;
+  color: #444;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: default;
+  user-select: none;
+}
+
 #load-more {
   display: block;
   margin: 16px auto 32px;

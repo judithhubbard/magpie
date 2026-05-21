@@ -3,7 +3,7 @@ import { rejectAndBackfill } from '../search.js';
 import { describeLicense } from '../attribution.js';
 import { looksAdult } from '../sources/base.js';
 import { openLightbox } from './lightbox.js';
-import { IS_EMBEDDED, postSelect } from '../embedding.js';
+import { IS_EMBEDDED, postSelect, isAttached, onAttachedChange } from '../embedding.js';
 
 const grid = document.getElementById('results-grid');
 const loadMoreBtn = document.getElementById('load-more');
@@ -17,6 +17,7 @@ export function init({ onLoadMore }) {
       safeRender();
     }
   });
+  onAttachedChange(safeRender);
   grid.addEventListener('click', handleClick);
   loadMoreBtn.addEventListener('click', onLoadMore);
   safeRender();
@@ -146,12 +147,20 @@ function renderTile(image) {
   tile.appendChild(bookmark);
 
   if (IS_EMBEDDED) {
-    const select = document.createElement('button');
-    select.className = 'tile-select';
-    select.textContent = '📥 Select';
-    select.title = 'Send this image’s attribution to the host page';
-    select.dataset.action = 'select';
-    tile.appendChild(select);
+    if (isAttached(image)) {
+      const chip = document.createElement('span');
+      chip.className = 'tile-attached';
+      chip.textContent = '✓ In catalog';
+      chip.title = 'Already added to this species’s photos';
+      tile.appendChild(chip);
+    } else {
+      const select = document.createElement('button');
+      select.className = 'tile-select';
+      select.textContent = '📥 Select';
+      select.title = 'Send this image’s attribution to the host page';
+      select.dataset.action = 'select';
+      tile.appendChild(select);
+    }
   }
 
   return tile;

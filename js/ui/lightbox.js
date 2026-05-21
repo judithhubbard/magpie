@@ -1,5 +1,5 @@
 import { describeLicense, formatAttribution } from '../attribution.js';
-import { IS_EMBEDDED, postSelect } from '../embedding.js';
+import { IS_EMBEDDED, postSelect, isAttached } from '../embedding.js';
 
 const modal = document.getElementById('lightbox');
 const content = modal.querySelector('.lightbox-content');
@@ -195,15 +195,23 @@ export function openLightbox(image) {
   closeBtn.textContent = 'Close';
 
   if (IS_EMBEDDED) {
-    const selectBtn = document.createElement('button');
-    selectBtn.className = 'primary lightbox-select';
-    selectBtn.textContent = '📥 Select';
-    selectBtn.title = 'Send this image’s attribution to the host page';
-    selectBtn.addEventListener('click', () => {
-      const sent = postSelect(image);
-      flashButton(selectBtn, sent ? 'Sent ✓' : 'Send failed');
-    });
-    actions.append(selectBtn);
+    if (isAttached(image)) {
+      const chip = document.createElement('span');
+      chip.className = 'lightbox-attached';
+      chip.textContent = '✓ In catalog';
+      chip.title = 'Already added to this species’s photos';
+      actions.append(chip);
+    } else {
+      const selectBtn = document.createElement('button');
+      selectBtn.className = 'primary lightbox-select';
+      selectBtn.textContent = '📥 Select';
+      selectBtn.title = 'Send this image’s attribution to the host page';
+      selectBtn.addEventListener('click', () => {
+        const sent = postSelect(image);
+        flashButton(selectBtn, sent ? 'Sent ✓' : 'Send failed');
+      });
+      actions.append(selectBtn);
+    }
   }
 
   actions.append(downloadBtn, copyUrlBtn, copyAttrBtn, closeBtn);
